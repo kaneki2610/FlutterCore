@@ -74,15 +74,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  fluttervnpt:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "36640078a41c78bb75f5c0352ecb4d753aca3132"
-      url: "git://github.com/kaneki2610/plugin_example.git"
-    source: git
-    version: "0.0.1"
   image:
     dependency: transitive
     description:
