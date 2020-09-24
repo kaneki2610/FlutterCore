@@ -69,11 +69,38 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_plugin_vnpt:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "368c44154f191c64dbd2248373779554ecd346a3"
+      url: "git://github.com/kaneki2610/PluginVnpt2.git"
+    source: git
+    version: "0.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutternative:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "70cf6c42847022aeae4611c507ef9702145bb922"
+      url: "git://github.com/kaneki2610/flutter_native.git"
+    source: git
+    version: "0.0.1"
+  fluttervnpt:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "321312d7c8373c48f0cf9e73b3f6e335886df630"
+      url: "git://github.com/kaneki2610/plugin_example.git"
+    source: git
+    version: "0.0.1"
   image:
     dependency: transitive
     description:
@@ -186,3 +213,4 @@ packages:
     version: "3.6.1"
 sdks:
   dart: ">=2.7.0 <3.0.0"
+  flutter: ">=1.10.0"
