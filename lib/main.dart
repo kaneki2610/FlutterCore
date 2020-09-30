@@ -63,13 +63,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     TextStyle(color: Colors.redAccent, fontSize: 16, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 8),
-              TextField(
+             /* TextField(
                   controller: controller,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Enter the Value',
-                  )),
-              SizedBox(height: 16),
+                  )),*/
+              //SizedBox(height: 16),
               RaisedButton(
                 padding: EdgeInsets.all(8),
                 onPressed: () {
@@ -109,19 +109,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     TextStyle(color: Colors.redAccent, fontSize: 16, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 8),
-              TextField(
+             /* TextField(
                   controller: controller1,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Enter the Value',
                   )),
-              SizedBox(height: 16),
+              SizedBox(height: 16),*/
               RaisedButton(
                 padding: EdgeInsets.all(8),
                 onPressed: () async {
                   this.gotoFlutterPlugin1();
                 },
-                child: Text("Start Flutter Plugin"),
+                child: Text("Start Flutter Plugin 1"),
               ),
             ],
           ),
@@ -130,19 +130,34 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void gotoFlutterPlugin1({String dataFromPlugin2}) async {
+    try {
+      Map<String, dynamic> param = {};
+      param["type"] = dataFromPlugin2 ?? "empty";
+      var result = await Pluginflutter().getDeviceInfo(param);
+      if (result != null) {
+        this.kichban3 = result;
+        this.gotoFlutterPlugin2(dataFromPlugin1: result);
+      } else {
+        this.kichban3 = "empty";
+      }
+      //this.controller1.clear();
+      setState(() {});
+    } on PlatformException catch (e) {
+      this.kichban3 = e.message;
+    }
+  }
+
   void gotoFlutterPlugin2({String dataFromPlugin1}) async {
     try {
       Map<String, dynamic> param = {};
-      param["type"] = this.controller.text;
+      param["type"] = dataFromPlugin1 ?? "empty";
       var result = await FlutterVnpt().getDeviceInfo(param);
       if (result != null) {
-        this._deviceInfo = result["value"];
-        print("---- ${result["value"]}");
-        if(result["event"] != null || result["event"] != "") {
-          this.gotoFlutterPlugin1(dataFromPlugin2: result["value"]);
-        }
+        this._deviceInfo = result;
+        this.gotoFlutterPlugin1(dataFromPlugin2: result);
       } else {
-        this._deviceInfo = "null";
+        this._deviceInfo = "empty";
       }
       //this.controller.clear();
       setState(() {});
@@ -151,25 +166,4 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void gotoFlutterPlugin1({String dataFromPlugin2}) async {
-    try {
-      Map<String, dynamic> param = {};
-      param["type"] = dataFromPlugin2 ?? this.controller1.text;
-      var result = await Pluginflutter().getDeviceInfo(param);
-      print("value : ${result.toString()}");
-      if (result != null) {
-        this.kichban3 = result["value"];
-        print("------kich ban 3  ${result["value"]}");
-        if(result["event"] != null || result["event"] != "") {
-          this.gotoFlutterPlugin2(dataFromPlugin1: result["value"]);
-        }
-      } else {
-        this.kichban3 = "null";
-      }
-      //this.controller1.clear();
-      setState(() {});
-    } on PlatformException catch (e) {
-      this.kichban3 = e.message;
-    }
-  }
 }
