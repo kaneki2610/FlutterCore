@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_plugin_vnpt/flutter_plugin_vnpt.dart';
 import 'package:flutternative/flutternative.dart';
 import 'package:fluttervnpt/fluttervnpt.dart';
+import 'package:pluginflutter/pluginflutter.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,7 +35,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String _deviceInfo = "empty";
   TextEditingController controller = TextEditingController();
-  bool _validate = false;
+
+  String kichban3 = "empty";
+  TextEditingController controller1 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,18 +54,13 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Text(
                 "1. Kịch bản 1:",
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),
               ),
               SizedBox(height: 8),
               Text(
                 "Value:   ${this._deviceInfo}",
-                style: TextStyle(
-                    color: Colors.redAccent,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
+                style:
+                    TextStyle(color: Colors.redAccent, fontSize: 16, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 8),
               TextField(
@@ -70,8 +68,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Enter the Value',
-                    errorText:
-                        this._validate ? 'Value Can\'t Be Empty' : null,
                   )),
               SizedBox(height: 16),
               RaisedButton(
@@ -84,10 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(height: 16),
               Text(
                 "2. Kịch bản 2:",
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),
               ),
               RaisedButton(
                 padding: EdgeInsets.all(8),
@@ -107,10 +100,28 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(height: 8),
               Text(
                 "3. Kịch bản 3:",
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),
+              ),
+              SizedBox(height: 8),
+              Text(
+                "Value:   ${this.kichban3}",
+                style:
+                    TextStyle(color: Colors.redAccent, fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              TextField(
+                  controller: controller1,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Enter the Value',
+                  )),
+              SizedBox(height: 16),
+              RaisedButton(
+                padding: EdgeInsets.all(8),
+                onPressed: () async {
+                  this.gotoFlutterPlugin1();
+                },
+                child: Text("Start Flutter Plugin"),
               ),
             ],
           ),
@@ -119,29 +130,46 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void gotoFlutterPlugin2() async {
-    if (controller.text.isEmpty) {
-      setState(() {
-        this._validate = true;
-      });
-    } else {
-      setState(() {
-        this._validate = false;
-      });
-      try {
-        Map<String, dynamic> param = {};
-        param["type"] = this.controller.text;
-        String result = await FlutterVnpt().getDeviceInfo(param);
-        if (result != null) {
-          this._deviceInfo = result;
-        } else {
-          this._deviceInfo = "null";
+  void gotoFlutterPlugin2({String dataFromPlugin1}) async {
+    try {
+      Map<String, dynamic> param = {};
+      param["type"] = this.controller.text;
+      var result = await FlutterVnpt().getDeviceInfo(param);
+      if (result != null) {
+        this._deviceInfo = result["value"];
+        print("---- ${result["value"]}");
+        if(result["event"] != null || result["event"] != "") {
+          this.gotoFlutterPlugin1(dataFromPlugin2: result["value"]);
         }
-        this.controller.clear();
-        setState(() {});
-      } on PlatformException catch (e) {
-        this._deviceInfo = e.message;
+      } else {
+        this._deviceInfo = "null";
       }
+      //this.controller.clear();
+      setState(() {});
+    } on PlatformException catch (e) {
+      this._deviceInfo = e.message;
+    }
+  }
+
+  void gotoFlutterPlugin1({String dataFromPlugin2}) async {
+    try {
+      Map<String, dynamic> param = {};
+      param["type"] = dataFromPlugin2 ?? this.controller1.text;
+      var result = await Pluginflutter().getDeviceInfo(param);
+      print("value : ${result.toString()}");
+      if (result != null) {
+        this.kichban3 = result["value"];
+        print("------kich ban 3  ${result["value"]}");
+        if(result["event"] != null || result["event"] != "") {
+          this.gotoFlutterPlugin2(dataFromPlugin1: result["value"]);
+        }
+      } else {
+        this.kichban3 = "null";
+      }
+      //this.controller1.clear();
+      setState(() {});
+    } on PlatformException catch (e) {
+      this.kichban3 = e.message;
     }
   }
 }

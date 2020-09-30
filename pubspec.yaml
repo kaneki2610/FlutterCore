@@ -23,12 +23,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  fluttervnpt:
-    git: git://github.com/kaneki2610/plugin_example.git
   flutter_plugin_vnpt:
     git: git://github.com/kaneki2610/PluginVnpt2.git
   flutternative:
     git: git://github.com/kaneki2610/flutter_native.git
+  pluginflutter:
+    git: git://github.com/kaneki2610/FlutterPlugin2.git
+  fluttervnpt:
+    git: git://github.com/kaneki2610/plugin_example.git
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

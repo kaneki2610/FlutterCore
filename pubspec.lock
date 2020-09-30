@@ -97,7 +97,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "321312d7c8373c48f0cf9e73b3f6e335886df630"
+      resolved-ref: "4c30c834c2dfb4fcb87aa882d11e7603c62726ec"
       url: "git://github.com/kaneki2610/plugin_example.git"
     source: git
     version: "0.0.1"
@@ -136,6 +136,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  pluginflutter:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "839ff9ffb742e25c355a03cb1a6cebf430f52950"
+      url: "git://github.com/kaneki2610/FlutterPlugin2.git"
+    source: git
+    version: "0.0.1"
   quiver:
     dependency: transitive
     description:
